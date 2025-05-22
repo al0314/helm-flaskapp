@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-deployment
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flask
+  template:
+    metadata:
+      labels:
+        app: flask
+    spec:
+      containers:
+        - name: flask-docker-starterkit-helm
+          image: al0314/flask-docker-starterkit:v1.0.2
+          env:
+            - name: FLASK_APP
+              value: flask_starterkit.main.app
+          resources:
+            limits:
+              memory: 1024Mi
+              cpu: "2"
+            requests:
+              memory: 512Mi
+              cpu: "0.2"
+          ports:
+          - containerPort: 5000
